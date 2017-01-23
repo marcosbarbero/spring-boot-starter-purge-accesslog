@@ -31,13 +31,11 @@ Sample configuration
 server:
   accesslog.purge:
     enabled: true #default false
-        enabled: true
-        execute-on-startup: true
-        execution-interval: 10
-        execution-interval-unit: SECONDS
-        max-history: 1
-        max-history-unit: MINUTES
-  
+    execute-on-startup: true
+    execution-interval: 10
+    execution-interval-unit: SECONDS
+    max-history: 1
+    max-history-unit: MINUTES
 ```
 
 Contributing

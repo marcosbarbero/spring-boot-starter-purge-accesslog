@@ -1,4 +1,4 @@
-package com.marcosbarbero.boot.accesslog;
+package com.marcosbarbero.boot.accesslog.customizer;
 
 import com.marcosbarbero.boot.accesslog.prototype.PurgeProperties;
 import com.marcosbarbero.boot.accesslog.runnable.PurgeTask;

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.marcosbarbero.boot.accesslog.customizer;
+package com.marcosbarbero.boot.accesslog;
 
-import com.marcosbarbero.boot.accesslog.PurgeAccessLogDeploymentInfoCustomizer;
+import com.marcosbarbero.boot.accesslog.customizer.PurgeAccessLogDeploymentInfoCustomizer;
 import com.marcosbarbero.boot.accesslog.prototype.PurgeProperties;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

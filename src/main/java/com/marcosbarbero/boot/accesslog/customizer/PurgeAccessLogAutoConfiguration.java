@@ -28,6 +28,7 @@ import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletConta
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -35,10 +36,16 @@ import org.springframework.context.annotation.Configuration;
  * @since 2017-01-23
  */
 @Configuration
-@ConditionalOnClass(ServerProperties.class)
 @EnableConfigurationProperties(PurgeProperties.class)
+@ConditionalOnClass(ServerProperties.class)
 @ConditionalOnProperty(name = PurgeProperties.PREFIX + ".enabled", havingValue = "true")
 public class PurgeAccessLogAutoConfiguration {
+
+    @Bean
+    public PurgeAccessLogCustomizer purgeAccessLogCustomizer(final ServerProperties serverProperties,
+                                                             final PurgeProperties purgeProperties) {
+        return new PurgeAccessLogCustomizer(serverProperties, purgeProperties);
+    }
 
     protected static class PurgeAccessLogCustomizer
             implements EmbeddedServletContainerCustomizer {
@@ -67,9 +74,9 @@ public class PurgeAccessLogAutoConfiguration {
                     final UndertowEmbeddedServletContainerFactory factory = (UndertowEmbeddedServletContainerFactory)
                             container;
                     final ServerProperties.Undertow.Accesslog accesslog = this.serverProperties.getUndertow()
-							.getAccesslog();
+                            .getAccesslog();
                     final PurgeAccessLogDeploymentInfoCustomizer customizer = new
-							PurgeAccessLogDeploymentInfoCustomizer(this.purgeProperties, accesslog);
+                            PurgeAccessLogDeploymentInfoCustomizer(this.purgeProperties, accesslog);
                     factory.addDeploymentInfoCustomizers(customizer);
                 }
             }

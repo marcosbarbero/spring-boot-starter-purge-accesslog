@@ -34,14 +34,14 @@
 
     <developers>
         <developer>
-            <id>marcosbarbero</id>
+            <id>matheusgg</id>                 
             <email>matheus.ggoes@outlook.com</email>
             <name>Matheus Góes</name>
             <timezone>BRT</timezone>
         </developer>
 
         <developer>
-            <id>matheusgg</id>
+            <id>marcosbarbero</id>                 
             <email>marcos.hgb@gmail.com</email>
             <name>Marcos Barbero</name>
             <timezone>BRT</timezone>

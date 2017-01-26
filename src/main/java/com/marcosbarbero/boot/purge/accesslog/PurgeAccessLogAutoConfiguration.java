@@ -38,8 +38,8 @@ import static java.lang.Boolean.TRUE;
 import com.marcosbarbero.boot.purge.accesslog.holder.TomcatPurgeAccessLogHolder;
 import com.marcosbarbero.boot.purge.accesslog.holder.UndertowPurgeAccessLogHolder;
 import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
-
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.valves.AccessLogValve;
 
 /**
  * @author Marcos Barbero
@@ -71,26 +71,41 @@ public class PurgeAccessLogAutoConfiguration {
 			}
 
 			if (container instanceof TomcatEmbeddedServletContainerFactory) {
-				final TomcatEmbeddedServletContainerFactory factory = (TomcatEmbeddedServletContainerFactory) container;
-				final Accesslog accesslog = this.serverProperties.getTomcat()
-						.getAccesslog();
-				if (accesslog.isEnabled()) {
-					final TomcatPurgeAccessLogHolder accessLogHolder = new TomcatPurgeAccessLogHolder(
-							this.purgeProperties, Paths.get(accesslog.getDirectory()),
-							accesslog.getPrefix(), accesslog.getSuffix());
-					factory.addContextCustomizers(accessLogHolder);
-				}
+				this.configureTomcatContainerFactory(
+						(TomcatEmbeddedServletContainerFactory) container);
 			}
 			else if (container instanceof UndertowEmbeddedServletContainerFactory) {
-				final UndertowEmbeddedServletContainerFactory factory = (UndertowEmbeddedServletContainerFactory) container;
-				final Undertow.Accesslog accesslog = this.serverProperties.getUndertow()
-						.getAccesslog();
-				if (TRUE.equals(accesslog.getEnabled())) {
-					final UndertowPurgeAccessLogHolder accessLogHolder = new UndertowPurgeAccessLogHolder(
-							this.purgeProperties, accesslog.getDir().toPath(),
-							accesslog.getPrefix(), accesslog.getSuffix());
-					factory.addDeploymentInfoCustomizers(accessLogHolder);
-				}
+				this.configureUndertowContainerFactory(
+						(UndertowEmbeddedServletContainerFactory) container);
+			}
+		}
+
+		private void configureTomcatContainerFactory(
+				final TomcatEmbeddedServletContainerFactory factory) {
+			final Accesslog accesslog = this.serverProperties.getTomcat().getAccesslog();
+			if (accesslog.isEnabled()) {
+				factory.getEngineValves().stream()
+						.filter(valve -> valve instanceof AccessLogValve)
+						.map(valve -> (AccessLogValve) valve).findFirst()
+						.ifPresent(valve -> {
+							final TomcatPurgeAccessLogHolder accessLogHolder = new TomcatPurgeAccessLogHolder(
+									this.purgeProperties,
+									Paths.get(accesslog.getDirectory()),
+									accesslog.getPrefix(), accesslog.getSuffix(), valve);
+							factory.addContextCustomizers(accessLogHolder);
+						});
+			}
+		}
+
+		private void configureUndertowContainerFactory(
+				final UndertowEmbeddedServletContainerFactory factory) {
+			final Undertow.Accesslog accesslog = this.serverProperties.getUndertow()
+					.getAccesslog();
+			if (TRUE.equals(accesslog.getEnabled())) {
+				final UndertowPurgeAccessLogHolder accessLogHolder = new UndertowPurgeAccessLogHolder(
+						this.purgeProperties, accesslog.getDir().toPath(),
+						accesslog.getPrefix(), accesslog.getSuffix());
+				factory.addDeploymentInfoCustomizers(accessLogHolder);
 			}
 		}
 	}

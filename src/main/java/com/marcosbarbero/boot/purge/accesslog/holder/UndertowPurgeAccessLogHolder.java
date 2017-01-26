@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import org.springframework.boot.context.embedded.undertow.UndertowDeploymentInfoCustomizer;
 
 import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
-
 import io.undertow.servlet.api.DeploymentInfo;
 
 /**
@@ -16,7 +15,7 @@ public class UndertowPurgeAccessLogHolder extends PurgeAccessLogHolder
 
 	public UndertowPurgeAccessLogHolder(final PurgeProperties purgeProperties,
 			final Path directory, final String prefix, final String suffix) {
-		super(purgeProperties, directory, prefix, suffix);
+		super(purgeProperties, directory, prefix, suffix, () -> prefix + suffix);
 	}
 
 	@Override

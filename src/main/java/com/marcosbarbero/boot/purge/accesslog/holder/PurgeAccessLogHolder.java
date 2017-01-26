@@ -2,6 +2,7 @@ package com.marcosbarbero.boot.purge.accesslog.holder;
 
 import java.nio.file.Path;
 import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 
 import static java.lang.Runtime.getRuntime;
 import static java.time.LocalDateTime.now;
@@ -11,7 +12,6 @@ import static java.util.concurrent.TimeUnit.valueOf;
 
 import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
 import com.marcosbarbero.boot.purge.accesslog.task.PurgeTask;
-
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -24,6 +24,7 @@ public abstract class PurgeAccessLogHolder {
 	private final Path directory;
 	private final String prefix;
 	private final String suffix;
+	private final Supplier<String> currentLogFileNameSupplier;
 
 	protected void attachPurgeTask() {
 		long initialDelay = 0;
@@ -33,7 +34,7 @@ public abstract class PurgeAccessLogHolder {
 		}
 
 		final PurgeTask purgeTask = new PurgeTask(this.purgeProperties, this.directory,
-				this.prefix, this.suffix);
+				this.prefix, this.suffix, this.currentLogFileNameSupplier);
 		final long executionInterval = this.purgeProperties.getExecutionInterval();
 		final String executionIntervalUnit = this.purgeProperties
 				.getExecutionIntervalUnit().name();

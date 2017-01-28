@@ -12,19 +12,6 @@ to the JVM. Full instructions can be found in the Lombok website. The
 sign that you need to do this is a lot of compiler errors to do with
 missing methods and fields.     
    
-Usage
----
->This project is available on maven central
-
-Add the dependency on pom.xml
-```
-<dependency>
-    <groupId>com.marcosbarbero.boot</groupId>
-    <artifactId>spring-boot-starter-purge-accesslog</artifactId>
-    <version>1.0.0.RELEASE</version>
-</dependency>
-```
-
 Sample configuration
 
 ```

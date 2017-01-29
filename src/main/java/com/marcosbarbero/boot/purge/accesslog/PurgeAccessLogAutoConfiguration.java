@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +38,14 @@ import static java.lang.Boolean.TRUE;
 import com.marcosbarbero.boot.purge.accesslog.holder.TomcatPurgeAccessLogHolder;
 import com.marcosbarbero.boot.purge.accesslog.holder.UndertowPurgeAccessLogHolder;
 import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.apache.catalina.valves.AccessLogValve;
 
 /**
+ * The type Purge access log auto configuration.
+ *
  * @author Marcos Barbero
  * @author Matheus Góes
  */
@@ -51,6 +55,13 @@ import org.apache.catalina.valves.AccessLogValve;
 @ConditionalOnProperty(name = PREFIX + ".enabled", havingValue = "true")
 public class PurgeAccessLogAutoConfiguration {
 
+	/**
+	 * Purge access log customizer purge access log customizer.
+	 *
+	 * @param serverProperties the server properties
+	 * @param purgeProperties the purge properties
+	 * @return the purge access log customizer
+	 */
 	@Bean
 	public PurgeAccessLogCustomizer purgeAccessLogCustomizer(
 			final ServerProperties serverProperties,
@@ -58,12 +69,26 @@ public class PurgeAccessLogAutoConfiguration {
 		return new PurgeAccessLogCustomizer(serverProperties, purgeProperties);
 	}
 
+	/**
+	 * The type Purge access log customizer.
+	 */
 	@RequiredArgsConstructor
 	static class PurgeAccessLogCustomizer implements EmbeddedServletContainerCustomizer {
 
+		/**
+		 * The Server properties.
+		 */
 		private final ServerProperties serverProperties;
+		/**
+		 * The Purge properties.
+		 */
 		private final PurgeProperties purgeProperties;
 
+		/**
+		 * Customize.
+		 *
+		 * @param container the container
+		 */
 		@Override
 		public void customize(final ConfigurableEmbeddedServletContainer container) {
 			if (container instanceof JettyEmbeddedServletContainerFactory) {
@@ -80,6 +105,11 @@ public class PurgeAccessLogAutoConfiguration {
 			}
 		}
 
+		/**
+		 * Configure tomcat container factory.
+		 *
+		 * @param factory the factory
+		 */
 		private void configureTomcatContainerFactory(
 				final TomcatEmbeddedServletContainerFactory factory) {
 			final Accesslog accesslog = this.serverProperties.getTomcat().getAccesslog();
@@ -97,6 +127,11 @@ public class PurgeAccessLogAutoConfiguration {
 			}
 		}
 
+		/**
+		 * Configure undertow container factory.
+		 *
+		 * @param factory the factory
+		 */
 		private void configureUndertowContainerFactory(
 				final UndertowEmbeddedServletContainerFactory factory) {
 			final Undertow.Accesslog accesslog = this.serverProperties.getUndertow()

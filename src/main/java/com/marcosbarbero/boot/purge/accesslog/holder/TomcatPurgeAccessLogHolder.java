@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.marcosbarbero.boot.purge.accesslog.holder;
 
 import java.io.File;
@@ -18,6 +34,8 @@ import org.apache.catalina.Context;
 import org.apache.catalina.valves.AccessLogValve;
 
 /**
+ * The type Tomcat purge access log holder.
+ *
  * @author Matheus Góes
  * @author Marcos Barbero
  */
@@ -25,8 +43,20 @@ import org.apache.catalina.valves.AccessLogValve;
 public class TomcatPurgeAccessLogHolder extends PurgeAccessLogHolder
 		implements TomcatContextCustomizer {
 
+	/**
+	 * The Current log file field.
+	 */
 	static final String CURRENT_LOG_FILE_FIELD = "currentLogFile";
 
+	/**
+	 * Instantiates a new Tomcat purge access log holder.
+	 *
+	 * @param purgeProperties the purge properties
+	 * @param directory the directory
+	 * @param prefix the prefix
+	 * @param suffix the suffix
+	 * @param accessLogValve the access log valve
+	 */
 	public TomcatPurgeAccessLogHolder(final PurgeProperties purgeProperties,
 			final Path directory, final String prefix, final String suffix,
 			final AccessLogValve accessLogValve) {
@@ -34,6 +64,13 @@ public class TomcatPurgeAccessLogHolder extends PurgeAccessLogHolder
 				createCurrentLogFileNameSupplier(accessLogValve));
 	}
 
+	/**
+	 * Retrieves current access log file name from AccessLogValve to avoid accidental
+	 * exclusion.
+	 *
+	 * @param accessLogValve the access log valve
+	 * @return A Supplier that knows how to retrieve the file name
+	 */
 	private static Supplier<String> createCurrentLogFileNameSupplier(
 			final AccessLogValve accessLogValve) {
 		return () -> {
@@ -55,6 +92,11 @@ public class TomcatPurgeAccessLogHolder extends PurgeAccessLogHolder
 		};
 	}
 
+	/**
+	 * Customize.
+	 *
+	 * @param context the context
+	 */
 	@Override
 	public void customize(final Context context) {
 		super.attachPurgeTask();

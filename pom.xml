@@ -172,10 +172,8 @@
 						</rule>
 					</rules>
 					<excludes>
-						<exclude>com/marcosbarbero/boot/purge/accesslog/properties/**
-						</exclude>
-						<exclude>com/marcosbarbero/boot/purge/accesslog/*Configuration*
-						</exclude>
+						<exclude>com/marcosbarbero/boot/purge/accesslog/properties/**</exclude>
+						<exclude>com/marcosbarbero/boot/purge/accesslog/*Configuration*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

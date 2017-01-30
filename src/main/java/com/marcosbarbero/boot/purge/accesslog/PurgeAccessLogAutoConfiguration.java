@@ -50,6 +50,7 @@ public class PurgeAccessLogAutoConfiguration {
      * The type Undertow purge access log configuration.
      */
     @ConditionalOnClass(io.undertow.Undertow.class)
+    @ConditionalOnProperty(name = "server.undertow.accesslog.enabled", havingValue = "true")
     public static class UndertowPurgeAccessLogConfiguration {
 
         /**
@@ -80,6 +81,7 @@ public class PurgeAccessLogAutoConfiguration {
      * The type Tomcat purge access log configuration.
      */
     @ConditionalOnClass(AccessLogValve.class)
+    @ConditionalOnProperty(name = "server.tomcat.accesslog.enabled", havingValue = "true")
     public static class TomcatPurgeAccessLogConfiguration {
 
         /**

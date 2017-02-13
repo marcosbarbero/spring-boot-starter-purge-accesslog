@@ -46,6 +46,13 @@ and follows a very standard Github development process, using Github tracker for
 and merging pull requests into master. If you want to contribute even something trivial 
 please do not hesitate, but follow the guidelines below.
 
+###Maintainers
+
+The current maintainers (people who can merge pull requests) are:
+
+  * [marcosbarbero](https://github.com/marcosbarbero)
+  * [matheusgg](https://github.com/matheusgg)
+
 ###Code of Conduct
 
 This project adheres to the Contributor Covenant [code of conduct](https://github.com/marcosbarbero/spring-boot-starter-purge-accesslog/blob/master/docs/code-of-conduct.adoc). 

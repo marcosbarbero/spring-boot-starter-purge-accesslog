@@ -43,7 +43,7 @@ import static com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties.
 @Configuration
 @EnableConfigurationProperties(PurgeProperties.class)
 @ConditionalOnClass(ServerProperties.class)
-@ConditionalOnProperty(name = PREFIX + ".enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = PREFIX, name = "enabled", havingValue = "true")
 public class PurgeAccessLogAutoConfiguration {
 
     /**

@@ -21,17 +21,15 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.function.Supplier;
 
+import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Context;
+import org.apache.catalina.valves.AccessLogValve;
+
 import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 
 import static org.springframework.util.ReflectionUtils.findField;
 import static org.springframework.util.ReflectionUtils.makeAccessible;
-
-import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.apache.catalina.Context;
-import org.apache.catalina.valves.AccessLogValve;
 
 /**
  * The type Tomcat purge access log holder.
@@ -61,7 +59,8 @@ public class TomcatPurgeAccessLogHolder extends PurgeAccessLogHolder
 			final Path directory, final String prefix, final String suffix,
 			final AccessLogValve accessLogValve) {
 		super(purgeProperties, directory, prefix, suffix,
-				createCurrentLogFileNameSupplier(accessLogValve));
+				createCurrentLogFileNameSupplier(accessLogValve,
+						getCurrentLogFileField(accessLogValve)));
 	}
 
 	/**
@@ -69,16 +68,14 @@ public class TomcatPurgeAccessLogHolder extends PurgeAccessLogHolder
 	 * exclusion.
 	 *
 	 * @param accessLogValve the access log valve
+	 * @param currentLogFileField the current log file field
 	 * @return A Supplier that knows how to retrieve the file name
 	 */
 	private static Supplier<String> createCurrentLogFileNameSupplier(
-			final AccessLogValve accessLogValve) {
+			final AccessLogValve accessLogValve, final Field currentLogFileField) {
 		return () -> {
 			String fileName = null;
 			try {
-				final Field currentLogFileField = findField(accessLogValve.getClass(),
-						CURRENT_LOG_FILE_FIELD, File.class);
-				makeAccessible(currentLogFileField);
 				final File currentLogFile = (File) currentLogFileField
 						.get(accessLogValve);
 				if (currentLogFile != null) {
@@ -93,7 +90,20 @@ public class TomcatPurgeAccessLogHolder extends PurgeAccessLogHolder
 	}
 
 	/**
-	 * Customize.
+	 * Retrieves current log file field.
+	 *
+	 * @param accessLogValve the access log valve
+	 * @return the current log file field
+	 */
+	private static Field getCurrentLogFileField(final AccessLogValve accessLogValve) {
+		final Field currentLogFileField = findField(accessLogValve.getClass(),
+				CURRENT_LOG_FILE_FIELD, File.class);
+		makeAccessible(currentLogFileField);
+		return currentLogFileField;
+	}
+
+	/**
+	 * Customizes Tomcat context.
 	 *
 	 * @param context the context
 	 */

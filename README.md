@@ -21,7 +21,7 @@ Add the dependency on pom.xml
 <dependency>		
     <groupId>com.marcosbarbero.boot</groupId>		
     <artifactId>spring-boot-starter-purge-accesslog</artifactId>		
-    <version>1.0.0.RELEASE</version>		
+    <version>1.0.1.RELEASE</version>		
 </dependency>		
 ```
    

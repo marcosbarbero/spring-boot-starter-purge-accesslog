@@ -73,7 +73,7 @@ public final class TestUtils {
 
 	public static String getCurrentAccessLogFileName(final String prefix,
 			final String suffix, final boolean appendCurrentDate) {
-		String fileName = null;
+		String fileName;
 		if (appendCurrentDate) {
 			final LocalDate now = LocalDate.now();
 			fileName = format(CURRENT_FILE_NAME_PATTERN, prefix, now.getYear(),

@@ -10,11 +10,11 @@
 	<packaging>jar</packaging>
 	<description>
 		<![CDATA[
-            Access log purge configuration for all web servers supported by Spring Boot
+            Access log purge configuration for Tomcat and Undertow web servers supported by Spring Boot
         ]]>
 	</description>
 	<url>https://github.com/marcosbarbero/spring-boot-starter-purge-accesslog</url>
-	<version>1.0.1.RELEASE</version>
+	<version>1.0.2.RELEASE</version>
 
 	<licenses>
 		<license>
@@ -28,9 +28,9 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<java.version>1.8</java.version>
-		<spring-boot-starter-parent.version>1.5.2.RELEASE</spring-boot-starter-parent.version>
-		<lombok.version>1.16.16</lombok.version>
-		<jacoco-maven-plugin.version>0.7.8</jacoco-maven-plugin.version>
+		<spring-boot-starter-parent.version>1.5.9.RELEASE</spring-boot-starter-parent.version>
+		<lombok.version>1.16.20</lombok.version>
+		<jacoco-maven-plugin.version>0.8.0</jacoco-maven-plugin.version>
 		<nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>

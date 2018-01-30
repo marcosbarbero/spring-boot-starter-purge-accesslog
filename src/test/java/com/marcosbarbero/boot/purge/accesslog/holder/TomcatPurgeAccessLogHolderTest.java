@@ -87,7 +87,7 @@ public class TomcatPurgeAccessLogHolderTest {
 	}
 
 	@Test
-	public void testCustomize() throws Exception {
+	public void testCustomize() {
 		this.holderUnderTest.customize(null);
 		final String[] fileNames = new File(this.accesslog.getDirectory()).list();
 		assertNotNull(fileNames);

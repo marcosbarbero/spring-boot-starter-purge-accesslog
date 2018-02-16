@@ -16,12 +16,6 @@
 
 package com.marcosbarbero.boot.purge.accesslog.properties;
 
-import java.time.temporal.ChronoUnit;
-import java.util.EnumSet;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import static com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties.PREFIX;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.ChronoUnit.HOURS;
@@ -30,7 +24,12 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 import static java.util.EnumSet.of;
 import static org.springframework.util.Assert.isTrue;
 
+import java.time.temporal.ChronoUnit;
+import java.util.EnumSet;
+
 import lombok.Data;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * The type Purge properties.
@@ -79,11 +78,9 @@ public class PurgeProperties implements InitializingBean {
 
 	/**
 	 * After properties set.
-	 *
-	 * @throws Exception the exception
 	 */
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		isTrue(this.executionInterval > 0, "'executionInterval' must be greater than 0");
 		isTrue(this.maxHistory > 0, "'maxHistory' must be greater than 0");
 		isTrue(ALLOWED_UNITS.contains(this.executionIntervalUnit),

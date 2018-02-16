@@ -79,7 +79,7 @@ public class UndertowPurgeAccessLogHolderTest {
 	}
 
 	@Test
-	public void customize() throws Exception {
+	public void customize() {
 		this.holderUnderTest.customize(null);
 		final String[] fileNames = this.accesslog.getDir().list();
 		assertNotNull(fileNames);

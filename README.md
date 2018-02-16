@@ -17,17 +17,17 @@ Usage
 This project is available on maven central		
 		
 Add the dependency on pom.xml		
-```		
+```xml		
 <dependency>		
     <groupId>com.marcosbarbero.boot</groupId>		
     <artifactId>spring-boot-starter-purge-accesslog</artifactId>		
-    <version>1.0.1.RELEASE</version>		
+    <version>1.0.2.RELEASE</version>		
 </dependency>		
 ```
    
 Sample configuration
 
-```
+```yaml
 server:
   accesslog.purge:
     enabled: true #default false

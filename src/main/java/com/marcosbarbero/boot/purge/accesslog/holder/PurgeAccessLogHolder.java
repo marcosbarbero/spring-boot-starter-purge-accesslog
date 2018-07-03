@@ -16,21 +16,21 @@
 
 package com.marcosbarbero.boot.purge.accesslog.holder;
 
+import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
+import com.marcosbarbero.boot.purge.accesslog.task.PurgeTask;
+import lombok.RequiredArgsConstructor;
+
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.function.Supplier;
 
-import static java.lang.Runtime.getRuntime;
 import static java.time.LocalDateTime.now;
 import static java.time.LocalTime.MIDNIGHT;
 import static java.time.temporal.ChronoUnit.MILLIS;
-import static java.util.concurrent.Executors.newScheduledThreadPool;
 import static java.util.concurrent.TimeUnit.valueOf;
-
-import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
-import com.marcosbarbero.boot.purge.accesslog.task.PurgeTask;
-
-import lombok.RequiredArgsConstructor;
 
 /**
  * The type Purge access log holder.
@@ -81,9 +81,13 @@ public abstract class PurgeAccessLogHolder {
 		final String executionIntervalUnit = this.purgeProperties
 				.getExecutionIntervalUnit().name();
 
-		newScheduledThreadPool(getRuntime().availableProcessors()).scheduleWithFixedDelay(
-				purgeTask, initialDelay, executionInterval,
-				valueOf(executionIntervalUnit));
+		ThreadFactory threadFactory = r -> new Thread(r, "access-log-purge-worker");
+		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(threadFactory);
+
+		executor.scheduleWithFixedDelay(purgeTask,
+										initialDelay,
+										executionInterval,
+										valueOf(executionIntervalUnit));
 	}
 
 }

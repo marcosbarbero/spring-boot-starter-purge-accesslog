@@ -18,11 +18,10 @@ package com.marcosbarbero.boot.purge.accesslog.holder;
 
 import java.nio.file.Path;
 
-import org.springframework.boot.context.embedded.undertow.UndertowDeploymentInfoCustomizer;
-
 import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
 
 import io.undertow.servlet.api.DeploymentInfo;
+import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
 
 /**
  * The type Undertow purge access log holder.

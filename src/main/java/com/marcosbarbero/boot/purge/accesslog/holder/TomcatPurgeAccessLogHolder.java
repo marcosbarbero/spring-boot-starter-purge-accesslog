@@ -25,8 +25,8 @@ import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.Context;
 import org.apache.catalina.valves.AccessLogValve;
+import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 
-import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 
 import static org.springframework.util.ReflectionUtils.findField;
 import static org.springframework.util.ReflectionUtils.makeAccessible;

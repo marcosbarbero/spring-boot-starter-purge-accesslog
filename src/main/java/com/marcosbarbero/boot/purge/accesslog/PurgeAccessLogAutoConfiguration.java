@@ -19,17 +19,16 @@ package com.marcosbarbero.boot.purge.accesslog;
 import com.marcosbarbero.boot.purge.accesslog.holder.TomcatPurgeAccessLogHolder;
 import com.marcosbarbero.boot.purge.accesslog.holder.UndertowPurgeAccessLogHolder;
 import com.marcosbarbero.boot.purge.accesslog.properties.PurgeProperties;
-
 import org.apache.catalina.valves.AccessLogValve;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Accesslog;
 import org.springframework.boot.autoconfigure.web.ServerProperties.Undertow;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.embedded.undertow.ConfigurableUndertowWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -61,12 +60,10 @@ public class PurgeAccessLogAutoConfiguration {
          * @return the embedded servlet container customizer
          */
         @Bean
-        public EmbeddedServletContainerCustomizer purgeAccessLogCustomizer(
+        public WebServerFactoryCustomizer<ConfigurableUndertowWebServerFactory> purgeAccessLogCustomizer(
                 final ServerProperties serverProperties,
                 final PurgeProperties purgeProperties) {
-            return container -> {
-                final UndertowEmbeddedServletContainerFactory factory = (UndertowEmbeddedServletContainerFactory)
-                        container;
+            return factory -> {
                 final Undertow.Accesslog accesslog = serverProperties.getUndertow()
                         .getAccesslog();
                 final UndertowPurgeAccessLogHolder accessLogHolder = new UndertowPurgeAccessLogHolder(
@@ -92,11 +89,10 @@ public class PurgeAccessLogAutoConfiguration {
          * @return the embedded servlet container customizer
          */
         @Bean
-        public EmbeddedServletContainerCustomizer purgeAccessLogCustomizer(
+        public WebServerFactoryCustomizer<TomcatServletWebServerFactory> purgeAccessLogCustomizer(
                 final ServerProperties serverProperties,
                 final PurgeProperties purgeProperties) {
-            return container -> {
-                final TomcatEmbeddedServletContainerFactory factory = (TomcatEmbeddedServletContainerFactory) container;
+            return factory -> {
                 final Accesslog accesslog = serverProperties.getTomcat().getAccesslog();
                 factory.getEngineValves().stream()
                         .filter(valve -> valve instanceof AccessLogValve)

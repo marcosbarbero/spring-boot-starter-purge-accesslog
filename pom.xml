@@ -44,13 +44,19 @@
 			<email>matheus.ggoes@outlook.com</email>
 			<name>Matheus Góes</name>
 			<timezone>BRT</timezone>
+			<roles>
+				<role>Project Lead</role>
+			</roles>
 		</developer>
 
 		<developer>
 			<id>marcosbarbero</id>
 			<email>marcos.hgb@gmail.com</email>
 			<name>Marcos Barbero</name>
-			<timezone>CET</timezone>
+			<timezone>Europe/Amsterdam</timezone>
+			<roles>
+				<role>Project Lead</role>
+			</roles>
 		</developer>
 	</developers>
 

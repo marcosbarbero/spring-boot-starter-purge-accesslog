@@ -31,7 +31,7 @@
 		<spring-boot-starter-parent.version>2.0.3.RELEASE</spring-boot-starter-parent.version>
 		<lombok.version>1.16.20</lombok.version>
 		<jacoco-maven-plugin.version>0.8.0</jacoco-maven-plugin.version>
-		<nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+		<nexus-staging-maven-plugin.version>1.6.3</nexus-staging-maven-plugin.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>

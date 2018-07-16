@@ -74,6 +74,19 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.3.0</version>
+				<configuration>
+					<jacocoReports>
+						<jacocoReport>
+							spring-cloud-zuul-ratelimit-core/target/site/jacoco/jacoco.xml
+						</jacocoReport>
+					</jacocoReports>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
 				<version>${nexus-staging-maven-plugin.version}</version>

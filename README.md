@@ -1,4 +1,4 @@
-Purgeable AccessLog for Spring Boot applications [![Build Status](https://travis-ci.org/marcosbarbero/spring-boot-starter-purge-accesslog.svg?branch=master)](https://travis-ci.org/marcosbarbero/spring-boot-starter-purge-accesslog)
+Purgeable AccessLog for Spring Boot applications [![Build Status](https://travis-ci.org/marcosbarbero/spring-boot-starter-purge-accesslog.svg?branch=master)](https://travis-ci.org/marcosbarbero/spring-boot-starter-purge-accesslog) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.marcosbarbero.boot/spring-boot-starter-purge-accesslog/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.marcosbarbero.boot/spring-boot-starter-purge-accesslog)
 ---
 Module to enable purge on access log files for spring-boot based applications.  
 
